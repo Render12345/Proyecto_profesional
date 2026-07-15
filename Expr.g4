@@ -4,10 +4,9 @@ root : expr EOF;
 
 //expr: expr MENOS expr | NUM;
 
-expr: EOF;
+expr: ID ASIG NUM;
 
 
-lexer grammar JSLexer;
 
 //Palabras reservadas
 VAR:'var';
