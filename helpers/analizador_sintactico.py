@@ -13,7 +13,7 @@ class ErroresSintacticos(ErrorListener):
 
         self.lista.append({
             "linea": line,
-            "columna": column,
+            "columna": column + 1,   # ANTLR reporta 0-indexed; +1 para que coincida con el editor
             "mensaje": msg
         })
 
@@ -26,27 +26,23 @@ class AnalizadorSintactico:
         self.arbol = None
         self.errores = ErroresSintacticos()
 
-
     def analizar(self, tokens):
 
         self.parser = ExprParser(tokens)
 
-        # Quitamos errores normales
         self.parser.removeErrorListeners()
-
-        # Agregamos nuestro listener
         self.parser.addErrorListener(self.errores)
 
-        # Regla inicial
         self.arbol = self.parser.root()
-
 
     def obtener_arbol(self):
 
         return self.arbol.toStringTree(recog=self.parser)
 
-
-
     def obtener_errores(self):
 
         return self.errores.lista
+
+    def es_correcto(self):
+        # Útil para mostrar en Streamlit "El código es correcto" cuando no hay errores
+        return len(self.errores.lista) == 0
