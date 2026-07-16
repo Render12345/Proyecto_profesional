@@ -1153,6 +1153,17 @@ class ExprParser ( Parser ):
             return self.getToken(ExprParser.PD, 0)
 
 
+    class PrimarySContext(ExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ExprParser.ExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def primaryExpr(self):
+            return self.getTypedRuleContext(ExprParser.PrimaryExprContext,0)
+
+
+
     class OptionalChainExprContext(ExprContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a ExprParser.ExprContext
@@ -1293,17 +1304,6 @@ class ExprParser ( Parser ):
 
         def OR(self):
             return self.getToken(ExprParser.OR, 0)
-
-
-    class PrimaryContext(ExprContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a ExprParser.ExprContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def primaryExpr(self):
-            return self.getTypedRuleContext(ExprParser.PrimaryExprContext,0)
-
 
 
 
@@ -1966,7 +1966,7 @@ class ExprParser ( Parser ):
                 pass
 
             elif la_ == 26:
-                localctx = ExprParser.PrimaryContext(self, localctx)
+                localctx = ExprParser.PrimarySContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 290

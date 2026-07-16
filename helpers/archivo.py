@@ -6,7 +6,7 @@ import os
 class Archivo:
     extenciones=[
             ".js", ".mjs", 
-            ".cjs", ".txt"
+            ".cjs"
         ]
 
     # Constructor de la clase
